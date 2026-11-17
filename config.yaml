@@ -1,0 +1,22 @@
+dataset:
+  openml_id: 4541
+  target_col: readmitted
+  sensitive_attr: race
+  drop_cols: ["weight", "payer_code", "medical_specialty", "encounter_id"]
+  test_size: 0.15
+  val_size: 0.15
+  random_seed: 42
+
+imbalance:
+  method: smote
+  random_seed: 42
+
+tuning:
+  n_trials: 10
+  cv_folds: 3
+  metric: roc_auc
+
+paths:
+  artifacts: artifacts/
+  plots: plots/
+  run_log: run_log.csv
