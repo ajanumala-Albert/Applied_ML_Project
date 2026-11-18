@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from src.data_loader import load_data, split_data
 from src.feature_engineering import report_engineered_features
-from src.imbalance import apply_smote, compute_scale_pos_weight
+from src.imbalance import  compute_scale_pos_weight
 from src.models import train_baselines, evaluate
 from src.tuning import run_all_tuning
 from src.pipeline import (
