@@ -2,6 +2,7 @@ dataset:
   openml_id: 4541
   target_col: readmitted
   sensitive_attr: race
+  group_col: patient_nbr
   drop_cols: ["weight", "payer_code", "medical_specialty", "encounter_id"]
   test_size: 0.15
   val_size: 0.15
