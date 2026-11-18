@@ -26,7 +26,7 @@ AML_Project/
 ├── src/
 │   ├── data_loader.py       # Load, clean, binarize, split
 │   ├── feature_engineering.py  # Custom features + sklearn transformers
-│   ├── imbalance.py         # SMOTE + class distribution reporting
+│   ├── imbalance.py         # Class imbalance utilities (scale_pos_weight)
 │   ├── models.py            # Baseline training & evaluation
 │   ├── tuning.py            # Optuna hyperparameter search
 │   ├── pipeline.py          # Full sklearn Pipeline builder
@@ -63,7 +63,7 @@ Fairness audit (race): Demographic Parity Difference 0.115 → 0.112 after rewei
 
 - [x] EDA & problem framing — dataset overview, missing values, class distribution
 - [x] Feature engineering — 3 engineered features with domain justification
-- [x] Class imbalance handling — `scale_pos_weight`, `class_weight='balanced'`, SMOTE
+- [x] Class imbalance handling — `scale_pos_weight` (XGBoost), `class_weight='balanced'` (LR/RF)
 - [x] Modelling progression — LogReg → RF → XGBoost with shared metrics
 - [x] sklearn Pipeline — `engineer → preprocessor → classifier` per model
 - [x] Hyperparameter tuning — Optuna TPE, 10 trials, 3-fold stratified CV
