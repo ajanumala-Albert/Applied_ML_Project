@@ -24,7 +24,7 @@ from src.data_loader import load_data, split_data
 from src.feature_engineering import report_engineered_features
 from src.imbalance import  compute_scale_pos_weight
 from src.models import train_baselines, evaluate
-from src.tuning import run_all_tuning
+from src.tuning import run_all_tuning, _append_run_log
 from src.pipeline import (
     build_logreg_pipeline,
     build_rf_pipeline,
@@ -71,7 +71,8 @@ def main():
     report_engineered_features(X_train)
 
     # ------------------------------------------------------------------ #
-    # 3. Baseline models (trained on raw train; SMOTE applied inside CV)  #
+    # 3. Baseline models (class imbalance handled via class_weight /      #
+    #    scale_pos_weight inside each pipeline)                           #
     # ------------------------------------------------------------------ #
     baseline_results = train_baselines(X_train, y_train, X_val, y_val, seed=seed)
 
@@ -106,12 +107,22 @@ def main():
         random_state=seed,
     )
     final_model.fit(X_trainval, y_trainval)
-    evaluate(final_model, X_test, y_test, "Final XGBoost model — Test set")
+    test_metrics = evaluate(final_model, X_test, y_test, "Final XGBoost model — Test set")
 
     # Save final model
     model_path = os.path.join(artifacts_dir, "final_model.pkl")
     joblib.dump(final_model, model_path)
     print(f"\nFinal model saved → {model_path}")
+
+    # Log final model artifact to run log
+    _append_run_log(
+        config["paths"]["run_log"],
+        "XGBoost_final",
+        "best",
+        xgb_best,
+        test_metrics["roc_auc"],
+        model_path,
+    )
 
     # ------------------------------------------------------------------ #
     # 6. SHAP explainability                                               #
