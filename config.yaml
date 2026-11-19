@@ -10,12 +10,12 @@ dataset:
 
 imbalance:
   method: class_weight
-  random_seed: 42
 
 tuning:
   n_trials: 10
   cv_folds: 3
   metric: roc_auc
+  subsample_frac: 0.2
 
 paths:
   artifacts: artifacts/

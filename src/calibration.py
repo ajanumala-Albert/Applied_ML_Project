@@ -6,7 +6,6 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 from sklearn.calibration import calibration_curve
 from sklearn.metrics import brier_score_loss
@@ -54,10 +53,12 @@ def run_calibration_diagnostics(
     if overconf_bins > underconf_bins:
         direction = "OVER-confident"
         note = (
-            "The model assigns higher probabilities than justified — "
-            "predicted ~30% doesn't mean 30% actually readmit. "
-            "Consider Platt scaling or isotonic regression before using "
-            "probabilities directly in downstream decisions (e.g. care routing)."
+            "The reliability curve indicates overconfidence: predicted "
+            "probabilities are generally higher than the observed event "
+            "frequencies. The model may still be useful for ranking patients "
+            "by relative risk, but its raw probabilities should be recalibrated "
+            "before being used in probability-based decisions. Platt scaling "
+            "or isotonic regression could be evaluated in future work."
         )
     else:
         direction = "UNDER-confident"

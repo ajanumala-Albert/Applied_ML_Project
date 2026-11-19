@@ -1,4 +1,4 @@
-"""Class imbalance handling: SMOTE resampling and reporting."""
+"""Class imbalance handling for weighted models."""
 
 import pandas as pd
 

@@ -1,5 +1,7 @@
 """Custom feature engineering and sklearn transformer definitions."""
 
+from time import time
+
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -20,11 +22,15 @@ class DiabetesFeatureEngineer(BaseEstimator, TransformerMixin):
         if isinstance(X, np.ndarray):
             raise ValueError("Expected a pandas DataFrame.")
 
+        for col in ["admission_type_id", "discharge_disposition_id", "admission_source_id"]:
+            if col in X.columns:
+                X[col] = X[col].astype("category")
+
         # Feature 1: medication intensity relative to stay length
         if "num_medications" in X.columns and "time_in_hospital" in X.columns:
             num_med = pd.to_numeric(X["num_medications"], errors="coerce").fillna(0)
             time = pd.to_numeric(X["time_in_hospital"], errors="coerce").fillna(1)
-            X["num_medications_per_day"] = num_med / (time + 1)
+            X["num_medications_per_day"] = num_med / time
 
         # Feature 2: total prior visit burden
         visit_cols = ["number_outpatient", "number_emergency", "number_inpatient"]

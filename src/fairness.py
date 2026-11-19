@@ -110,7 +110,7 @@ def run_fairness_audit(
     print("\n--- Before mitigation ---")
     print(metrics_before[["n", "TPR", "FPR", "PPR", "ROC_AUC"]].round(4).to_string())
     print(f"\nDemographic Parity Difference (PPR gap): {dp_before:.4f}")
-    print(f"Equalized Odds — TPR gap:                 {eo_before:.4f}")
+    print(f"\nTPR gap (equal opportunity component):     {eo_before:.4f}")
 
     # --- Reweighing mitigation ---
     print("\n--- Applying Reweighing mitigation ---")
@@ -147,7 +147,7 @@ def run_fairness_audit(
     print("\n--- After Reweighing mitigation ---")
     print(metrics_after[["n", "TPR", "FPR", "PPR", "ROC_AUC"]].round(4).to_string())
     print(f"\nDemographic Parity Difference (PPR gap): {dp_after:.4f}")
-    print(f"Equalized Odds — TPR gap:                 {eo_after:.4f}")
+    print(f"\nTPR gap (equal opportunity component):     {eo_after:.4f}")
 
     # --- Summary comparison ---
     overall_auc_before = roc_auc_score(y_test, y_prob_before)
@@ -157,12 +157,13 @@ def run_fairness_audit(
     print(f"{'Metric':<35} {'Before':>8} {'After':>8}")
     print("-" * 55)
     print(f"{'Demographic Parity Diff (PPR gap)':<35} {dp_before:>8.4f} {dp_after:>8.4f}")
-    print(f"{'Equalized Odds (TPR gap)':<35} {eo_before:>8.4f} {eo_after:>8.4f}")
+    print(f"{'TPR gap (equal opportunity component)':<35} {eo_before:>8.4f} {eo_after:>8.4f}")
     print(f"{'Overall ROC-AUC':<35} {overall_auc_before:>8.4f} {overall_auc_after:>8.4f}")
     print(
-        "\nNote: Reweighing trades a small amount of overall AUC for reduced "
-        "disparity between racial groups. The appropriate fairness criterion "
-        "(demographic parity vs equalized odds) depends on the downstream use case."
+        "\nNote: Lower PPR and TPR gaps indicate lower disparity. "
+        "Reweighing may improve one fairness measure while worsening "
+        "another and may also affect overall ROC-AUC. The appropriate "
+        "fairness criterion depends on the downstream use case."
     )
 
     # --- Plot ---
@@ -180,7 +181,7 @@ def run_fairness_audit(
         ax.tick_params(axis="x", rotation=30)
         ax.grid(axis="y", alpha=0.3)
 
-    plt.suptitle("Fairness Audit — Equalized Odds (TPR by Race)", fontsize=13)
+    plt.suptitle("Fairness Audit - TPR by Race Group", fontsize=13)
     plt.tight_layout()
     out_path = os.path.join(plots_dir, "fairness_tpr_by_race.png")
     plt.savefig(out_path, dpi=150, bbox_inches="tight")
