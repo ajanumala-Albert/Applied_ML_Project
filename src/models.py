@@ -1,6 +1,5 @@
 """Baseline model training, evaluation, and comparison."""
 
-import numpy as np
 import pandas as pd
 from sklearn.metrics import (
     roc_auc_score,
@@ -8,14 +7,12 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     brier_score_loss,
-    classification_report,
 )
 
 from src.pipeline import (
     build_logreg_pipeline,
     build_rf_pipeline,
     build_xgb_pipeline,
-    infer_column_types,
 )
 from src.imbalance import compute_scale_pos_weight
 
@@ -43,7 +40,7 @@ def train_baselines(
     y_train: pd.Series,
     X_val: pd.DataFrame,
     y_val: pd.Series,
-    seed: int = 42,
+    random_state: int = 42,
 ) -> dict:
     """Train three baseline models and report validation metrics."""
     spw = compute_scale_pos_weight(y_train)
@@ -54,7 +51,7 @@ def train_baselines(
     # --- Logistic Regression ---
     print("\nTraining Logistic Regression (baseline)...")
     lr = build_logreg_pipeline(X_train, C=1.0, solver="saga",
-                                class_weight="balanced", random_state=seed)
+                                class_weight="balanced", random_state=random_state)
     lr.fit(X_train, y_train)
     results["LogisticRegression"] = {
         "model": lr,
@@ -64,7 +61,7 @@ def train_baselines(
     # --- Random Forest ---
     print("\nTraining Random Forest...")
     rf = build_rf_pipeline(X_train, n_estimators=100, max_depth=10,
-                            class_weight="balanced", random_state=seed)
+                            class_weight="balanced", random_state=random_state)
     rf.fit(X_train, y_train)
     results["RandomForest"] = {
         "model": rf,
@@ -75,7 +72,7 @@ def train_baselines(
     print("\nTraining XGBoost...")
     xgb = build_xgb_pipeline(
         X_train, learning_rate=0.1, max_depth=6, n_estimators=100,
-        scale_pos_weight=spw, random_state=seed
+        scale_pos_weight=spw, random_state=random_state
     )
     xgb.fit(X_train, y_train)
     results["XGBoost"] = {
