@@ -58,7 +58,7 @@ def build_logreg_pipeline(
             C=C,
             solver=solver,
             class_weight=class_weight,
-            max_iter=1000,
+            max_iter=2000,
             random_state=random_state,
         )),
     ])

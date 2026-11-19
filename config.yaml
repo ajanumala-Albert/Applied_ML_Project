@@ -10,7 +10,6 @@ dataset:
 
 imbalance:
   method: class_weight
-  random_seed: 42
 
 tuning:
   n_trials: 10
