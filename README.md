@@ -98,7 +98,7 @@ Baseline results are reported on the validation set. The final tuned XGBoost res
 | XGBoost | 0.6852 | 0.2857 | 0.1895 | 0.5798 | 0.2114 |
 | **XGBoost, tuned test result** | **0.6603** | **0.2602** | **0.1680** | **0.5769** | **0.2252** |
 
-Because early readmission represents approximately 11% of records, accuracy alone could be misleading. In this project, recall is treated as the primary metric because the objective is to identify as many patients at risk of early readmission as possible for preventive support. Precision and F1 are also reported to quantify the false-alert trade-off.
+Because early readmission represents approximately 11% of records, accuracy alone could be misleading. Recall is emphasised from a prevention-oriented perspective, while precision and F1 quantify the false-alert trade-off. XGBoost is selected for its stronger overall performance, although Random Forest achieves slightly higher recall at the default threshold. In practice, the decision threshold could be adjusted to prioritise recall based on the operational context.
 
 ### Hyperparameter tuning
 

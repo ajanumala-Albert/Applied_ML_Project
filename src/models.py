@@ -98,11 +98,11 @@ def _print_comparison_table(results: dict) -> None:
 
     print(
         "\nNote: Because early readmission represents approximately 11% "
-        "of records, accuracy alone could be misleading. In this project, "
-        "recall is treated as our primary metric because our objective is "
-        "to identify as many patients at risk of early readmission as "
-        "possible for preventive support. Precision and F1 are also "
-        "reported to quantify the false-alert trade-off, while ROC-AUC "
-        "evaluates ranking ability and Brier score evaluates probability "
-        "quality."
+    "of records, accuracy alone could be misleading. Recall is "
+    "emphasised from a prevention-oriented perspective because "
+    "identifying as many at-risk patients as possible may support "
+    "earlier intervention. Precision and F1 quantify the false-alert "
+    "trade-off, while ROC-AUC evaluates ranking ability and Brier "
+    "score evaluates probability quality. The appropriate balance "
+    "depends on the operational context and classification threshold."
     )
