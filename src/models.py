@@ -95,7 +95,14 @@ def _print_comparison_table(results: dict) -> None:
             f"{name:<22} {m['roc_auc']:>8.4f} {m['f1']:>8.4f} "
             f"{m['precision']:>10.4f} {m['recall']:>8.4f} {m['brier']:>8.4f}"
         )
+
     print(
-        "\nNote: We prioritise ROC-AUC and F1 over accuracy because the "
-        "positive class (early readmission) is ~11% of records."
+        "\nNote: Because early readmission represents approximately 11% "
+        "of records, accuracy alone could be misleading. In this project, "
+        "recall is treated as our primary metric because our objective is "
+        "to identify as many patients at risk of early readmission as "
+        "possible for preventive support. Precision and F1 are also "
+        "reported to quantify the false-alert trade-off, while ROC-AUC "
+        "evaluates ranking ability and Brier score evaluates probability "
+        "quality."
     )

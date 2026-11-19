@@ -144,5 +144,5 @@ def _report_missing(X: pd.DataFrame) -> None:
 
 def _report_dtypes(X: pd.DataFrame) -> None:
     print("\n--- Column dtypes ---")
-    dtype_counts = X.dtypes.value_counts()
+    dtype_counts = X.dtypes.astype(str).value_counts()
     print(dtype_counts.to_string())

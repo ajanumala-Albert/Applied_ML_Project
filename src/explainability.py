@@ -71,12 +71,13 @@ def run_explainability(
         print(f"  {i+1}. {feat}  (mean |SHAP| = {mean_abs_shap[top_indices[i]]:.4f})")
 
     print(
-        "\nClinical interpretation: Features such as 'number_inpatient', "
-        "'total_visits', and 'num_medications' align with known clinical risk "
-        "factors for readmission — high prior utilisation and polypharmacy are "
-        "well-established predictors. 'time_in_hospital' and 'num_lab_procedures' "
-        "reflect illness severity. This gives us confidence that the model has "
-        "learned clinically meaningful signals rather than spurious correlations."
+    "\nInterpretation: SHAP values describe predictive associations and "
+    "model behaviour, not causal effects. In this run, prior inpatient "
+    "utilisation, total prior visits, and specific discharge disposition "
+    "categories had the largest average influence. The discharge disposition "
+    "features are administrative codes and should be interpreted cautiously. "
+    "These results do not establish that any feature causes early readmission "
+    "or rule out spurious associations."
     )
 
     # --- Local: waterfall plots for n_local test samples ---
