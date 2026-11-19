@@ -22,15 +22,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from src.data_loader import load_data, split_data
 from src.feature_engineering import report_engineered_features
-from src.imbalance import  compute_scale_pos_weight
+from src.imbalance import compute_scale_pos_weight
 from src.models import train_baselines, evaluate
 from src.tuning import run_all_tuning, _append_run_log
-from src.pipeline import (
-    build_logreg_pipeline,
-    build_rf_pipeline,
-    build_xgb_pipeline,
-    infer_column_types,
-)
+from src.pipeline import build_xgb_pipeline
 from src.explainability import run_explainability
 from src.calibration import run_calibration_diagnostics
 from src.fairness import run_fairness_audit
@@ -74,7 +69,7 @@ def main():
     # 3. Baseline models (class imbalance handled via class_weight /      #
     #    scale_pos_weight inside each pipeline)                           #
     # ------------------------------------------------------------------ #
-    baseline_results = train_baselines(X_train, y_train, X_val, y_val, seed=seed)
+    baseline_results = train_baselines(X_train, y_train, X_val, y_val, random_state=seed)
 
     # ------------------------------------------------------------------ #
     # 4. Hyperparameter tuning — subsample to 20 % for speed/RAM         #
